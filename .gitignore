@@ -1,3 +1,4 @@
 Commands.txt
 actions-runner
 liquibase.checks-settings.conf.backup*
+initial.mssql.sql
