@@ -1,7 +1,8 @@
 /*
-    ********** Release 1.0.1 **********
+    ********** Release 1.1.0 **********
 */
-CREATE VIEW HumanResources.vEmployeeDepartmentHistory AS SELECT 
+--changeset jbennett:ddl_create_view_employee_dept_hist labels:jira-1301,release-1.1.0 runOnChange:true
+CREATE OR ALTER VIEW HumanResources.vEmployeeDepartmentHistory AS SELECT 
     e.[BusinessEntityID] 
     ,p.[Title] 
     ,p.[FirstName] 

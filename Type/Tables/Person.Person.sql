@@ -1,7 +1,7 @@
 /*
     ********** Release 1.0.0 **********
 */
---changeset mikeo:ddl_create_table_person labels:jira-1218,release-1.0.0
+--changeset mikeo:ddl_create_table_person labels:jira-1244,release-1.0.0
 CREATE TABLE Person.Person (
     BusinessEntityID int NOT NULL,
     PersonType nchar(2) NOT NULL,

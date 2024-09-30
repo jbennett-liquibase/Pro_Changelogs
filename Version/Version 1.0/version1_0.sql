@@ -1,7 +1,19 @@
 /*
     ********** Release 1.0.0 **********
 */
---changeset mikeo:ddl_create_table_customer labels:jira-1218,release-1.0.0
+--changeset jbennett:ddl_create_table_purchasing_vendor labels:jira-1218,release-1.0.0
+CREATE TABLE Purchasing.Vendor (
+    BusinessEntityID int NOT NULL,
+    AccountNumber AccountNumber NOT NULL,
+    Name Name NOT NULL, CreditRating tinyint NOT NULL,
+    PreferredVendorStatus Flag(1) CONSTRAINT DF_Vendor_PreferredVendorStatus DEFAULT 1 NOT NULL,
+    ActiveFlag Flag(1) CONSTRAINT DF_Vendor_ActiveFlag DEFAULT 1 NOT NULL,
+    PurchasingWebServiceURL nvarchar(1024),
+    ModifiedDate datetime CONSTRAINT DF_Vendor_ModifiedDate DEFAULT GETDATE() NOT NULL,
+    CONSTRAINT PK_Vendor_BusinessEntityID PRIMARY KEY (BusinessEntityID));
+--rollback DROP TABLE Purchasing.Vendor;
+
+--changeset mikeo:ddl_create_table_customer labels:jira-1220,release-1.0.0
 CREATE TABLE Sales.Customer (
     CustomerID int IDENTITY (1, 1) NOT NULL,
     PersonID int,
@@ -13,7 +25,36 @@ CREATE TABLE Sales.Customer (
     CONSTRAINT PK_Customer_CustomerID PRIMARY KEY (CustomerID));
 --rollback DROP TABLE Sales.Customer;
 
---changeset mikeo:ddl_create_table_person labels:jira-1218,release-1.0.0
+--changeset mikeo:ddl_create_view_store_with_contacts labels:jira-1232,release-1.0.0 runOnChange:true
+CREATE OR ALTER VIEW Sales.vStoreWithContacts AS SELECT 
+    s.[BusinessEntityID] 
+    ,s.[Name] 
+    ,ct.[Name] AS [ContactType] 
+    ,p.[Title] 
+    ,p.[FirstName] 
+    ,p.[MiddleName] 
+    ,p.[LastName] 
+    ,p.[Suffix] 
+    ,pp.[PhoneNumber] 
+	,pnt.[Name] AS [PhoneNumberType]
+    ,ea.[EmailAddress] 
+    ,p.[EmailPromotion] 
+FROM [Sales].[Store] s
+    INNER JOIN [Person].[BusinessEntityContact] bec 
+    ON bec.[BusinessEntityID] = s.[BusinessEntityID]
+	INNER JOIN [Person].[ContactType] ct
+	ON ct.[ContactTypeID] = bec.[ContactTypeID]
+	INNER JOIN [Person].[Person] p
+	ON p.[BusinessEntityID] = bec.[PersonID]
+	LEFT OUTER JOIN [Person].[EmailAddress] ea
+	ON ea.[BusinessEntityID] = p.[BusinessEntityID]
+	LEFT OUTER JOIN [Person].[PersonPhone] pp
+	ON pp.[BusinessEntityID] = p.[BusinessEntityID]
+	LEFT OUTER JOIN [Person].[PhoneNumberType] pnt
+	ON pnt.[PhoneNumberTypeID] = pp.[PhoneNumberTypeID];
+--rollback DROP VIEW Sales.vStoreWithContacts;
+
+--changeset mikeo:ddl_create_table_person labels:jira-1244,release-1.0.0
 CREATE TABLE Person.Person (
     BusinessEntityID int NOT NULL,
     PersonType nchar(2) NOT NULL,
@@ -31,24 +72,7 @@ CREATE TABLE Person.Person (
     CONSTRAINT PK_Person_BusinessEntityID PRIMARY KEY (BusinessEntityID));
 --rollback DROP TABLE Person.Person;
 
---changeset jbennett:ddl_create_table_businessunit labels:jira-1218,release-1.0.0
-CREATE TABLE Sales.BusinessUnit (
-    BusinessUnitID INT PRIMARY KEY,
-    Name VARCHAR(50),
-    TerritoryID INT REFERENCES Sales.SalesTerritory(TerritoryID),
-    ModifiedDate DATETIME
-);
---rollback DROP TABLE Sales.BusinessUnit;
-
---changeset jbennett:dml_insert_businessunit labels:jira-1218,release-1.0.0
-INSERT INTO Sales.BusinessUnit (BusinessUnitID, Name, TerritoryID, ModifiedDate) VALUES (1, 'Explosives', 1, GETDATE());
-INSERT INTO Sales.BusinessUnit (BusinessUnitID, Name, TerritoryID, ModifiedDate) VALUES (2, 'Glue', 1, GETDATE());
-INSERT INTO Sales.BusinessUnit (BusinessUnitID, Name, TerritoryID, ModifiedDate) VALUES (3, 'Anvils', 2, GETDATE());
-INSERT INTO Sales.BusinessUnit (BusinessUnitID, Name, TerritoryID, ModifiedDate) VALUES (4, 'Appliances', 3, GETDATE());
-INSERT INTO Sales.BusinessUnit (BusinessUnitID, Name, TerritoryID, ModifiedDate) VALUES (5, 'Rockets', 4, GETDATE());
---rollback DELETE FROM Sales.BusinessUnit WHERE BusinessUnitID BETWEEN 1 AND 5;
-
---changeset dzentgraf:sp_create_toptenquota labels:jira-1357,release-1.0.0
+--changeset dzentgraf:sp_create_top_ten_quota labels:jira-1299,release-1.0.0
 CREATE OR ALTER PROCEDURE Sales.TopTenQuota AS
 SET ROWCOUNT 10
 SELECT Sales.SalesPersonQuotaHistory.SalesQuota AS TopTenQuota, Sales.SalesPersonQuotaHistory.BusinessEntityID

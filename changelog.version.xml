@@ -9,6 +9,12 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
+    <!--
+        Directories will be processed in the order specified
+        Within each directory files will be processed alphabetically (this can be changed)
+        https://docs.liquibase.com/change-types/includeall.html
+    -->
+
     <includeAll path="Version/Version 1.0" errorIfMissingOrEmpty="false"/>
     <includeAll path="Version/Version 1.1" errorIfMissingOrEmpty="false"/>
 
