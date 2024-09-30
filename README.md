@@ -5,7 +5,7 @@
 # Overview
 This repository contains sample changelogs organized by object type and release.
 
-The initial changesets were built using the [Adventure Works Database](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&tabs=ssms) provided by Microsoft for SQL Server. While the structure of the files is correct the changelogs will not run as-is due to missing dependencies.
+The initial changesets were built using the [Adventure Works 2019](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&tabs=ssms) database provided by Microsoft for SQL Server. While the structure of the files is correct the changelogs will not run as-is due to missing dependencies (only a few object examples are included).
 
 Best practices for changelog management can be found [here](https://docs.liquibase.com/concepts/bestpractices.html).
 
