@@ -34,7 +34,8 @@ changelog.version.xml
 │       version1_0.sql
 │
 └───Version 1.1
-        version1_1.sql
+│       version1_1.sql
+│
 ```
 
 # Contact Liquibase
