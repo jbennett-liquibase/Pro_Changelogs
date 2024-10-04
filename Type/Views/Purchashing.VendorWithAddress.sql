@@ -1,3 +1,5 @@
+--liquibase formatted sql
+
 /*
     ********** Release 1.1.0 **********
 */
