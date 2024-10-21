@@ -38,6 +38,6 @@ changelog.version.xml
 │
 ```
 
-# Contact Liquibase
-#### Liquibase sales: https://www.liquibase.com/contact
-#### Liquibase support: https://support.liquibase.com/knowledge
+## Contact Liquibase
+* Liquibase sales: https://www.liquibase.com/contact
+* Liquibase support: https://support.liquibase.com/
