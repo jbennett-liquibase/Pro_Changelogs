@@ -9,7 +9,7 @@ The initial changesets were built using the [Adventure Works 2019](https://learn
 
 Best practices for changelog management can be found [here](https://docs.liquibase.com/concepts/bestpractices.html).
 
-# Tree By Type
+# Directory By Object
 ```
 changelog.type.xml
 ├───Tables
@@ -27,7 +27,7 @@ changelog.type.xml
 │
 ```
 
-# Tree By Version
+# Directory By Version
 ```
 changelog.version.xml
 ├───Version 1.0
