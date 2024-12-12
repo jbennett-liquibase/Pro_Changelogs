@@ -16,8 +16,7 @@ changelog.type.xml
 │       Person.Person.sql
 │       Purchasing.Vendor.sql
 │       Sales.Customer.sql
-│
-└───Views
+├───Views
 │       HumanResources.EmployeeDepartmentHistory.sql
 │       Purchashing.VendorWithAddress.sql
 │       Sales.StoreWithContacts.sql
@@ -32,10 +31,8 @@ changelog.type.xml
 changelog.version.xml
 ├───Version 1.0
 │       version1_0.sql
-│
-└───Version 1.1
+├───Version 1.1
 │       version1_1.sql
-│
 ```
 
 ## Contact Liquibase
