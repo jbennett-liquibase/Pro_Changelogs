@@ -36,4 +36,4 @@ changelog.version.xml
 ```
 
 # ☎️ Contact Liquibase
-Liquibase sales: https://www.liquibase.com/contact<br>
+Liquibase sales: https://www.liquibase.com/contact-us<br>
